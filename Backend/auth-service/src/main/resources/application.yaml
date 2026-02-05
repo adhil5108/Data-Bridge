@@ -1,0 +1,32 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: auth-service
+
+  redis:
+    host: localhost
+    port: 6379
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: muhammedhadilv@gmail.com
+    password: xlnh clzw lmjp dmww
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: ZGF0YWJyaWRnZS1zdXBlci1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4=
+  access-token-expiration: 900000
+  refresh-token-expiration: 604800000
