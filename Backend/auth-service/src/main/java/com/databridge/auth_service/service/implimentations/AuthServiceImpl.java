@@ -3,6 +3,7 @@ package com.databridge.auth_service.service.implimentations;
 import com.databridge.auth_service.dtos.*;
 import com.databridge.auth_service.entity.RefreshToken;
 import com.databridge.auth_service.entity.User;
+import com.databridge.auth_service.enums.AuthProvider;
 import com.databridge.auth_service.enums.ErrorCode;
 import com.databridge.auth_service.enums.Role;
 import com.databridge.auth_service.exception.AppException;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +47,7 @@ public class AuthServiceImpl implements AuthService {
                 request,
                 Duration.ofMinutes(5)
         );
+
 
         String otp = otpService.generateOtp(request.getEmail());
 
@@ -133,6 +136,9 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setRole(Role.USER);
+        user.setProvider(AuthProvider.LOCAL);
+        user.setCreatedAt(Instant.now());
+
 
         userRepository.save(user);
 

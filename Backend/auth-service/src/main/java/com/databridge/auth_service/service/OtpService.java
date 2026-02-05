@@ -20,6 +20,18 @@ public class OtpService {
 
     public String generateOtp(String email){
 
+        String rateLimitKey = "otp:limit:" + email;
+
+        Long requests = redisTemplate.opsForValue().increment(rateLimitKey);
+
+        if(requests != null && requests == 1){
+            redisTemplate.expire(rateLimitKey, Duration.ofMinutes(5));
+        }
+
+        if(requests != null && requests > 3){
+            throw new AppException(ErrorCode.TOO_MANY_OTP_REQUESTS);
+        }
+
         String otp = String.valueOf(
                 ThreadLocalRandom.current().nextInt(100000, 999999)
         );
@@ -29,11 +41,12 @@ public class OtpService {
         redisTemplate.opsForValue().set(
                 "otp:" + email,
                 hashedOtp,
-                Duration.ofMinutes(OTP_EXPIRY_MINUTES)
+                Duration.ofMinutes(5)
         );
 
         return otp;
     }
+
 
     public boolean verifyOtp(String email, String otp){
 

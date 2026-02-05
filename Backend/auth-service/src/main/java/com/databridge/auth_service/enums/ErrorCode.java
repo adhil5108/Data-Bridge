@@ -20,7 +20,9 @@ public enum ErrorCode {
 
     INVALID_OTP("Invalid OTP", HttpStatus.UNAUTHORIZED),
 
-    REGISTRATION_EXPIRED("Registration expired. Please register again.", HttpStatus.GONE);
+    REGISTRATION_EXPIRED("Registration expired. Please register again.", HttpStatus.GONE),
+
+    TOO_MANY_OTP_REQUESTS("Too many OTP requests. Try again later.", HttpStatus.TOO_MANY_REQUESTS);
 
     private final String message;
     private final HttpStatus status;
