@@ -1,5 +1,6 @@
 package com.databridge.apigateway.security;
 
+import com.databridge.apigateway.enums.ErrorCode;
 import com.databridge.apigateway.exception.InvalidTokenException;
 import com.databridge.apigateway.security.error.GatewayErrorHandler;
 import io.jsonwebtoken.Claims;
@@ -39,7 +40,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
             return errorHandler.handle(
                     exchange,
                     HttpStatus.UNAUTHORIZED,
-                    "Missing or invalid Authorization header"
+                    ErrorCode.MISSING_AUTH_HEADER.getMessage()
             );
         }
 
@@ -55,7 +56,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
             return errorHandler.handle(
                     exchange,
                     HttpStatus.UNAUTHORIZED,
-                    "Invalid JWT Token"
+                    ErrorCode.INVALID_TOKEN.getMessage()
             );
         }
 
@@ -66,7 +67,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
             return errorHandler.handle(
                     exchange,
                     HttpStatus.UNAUTHORIZED,
-                    "Role missing in token"
+                    ErrorCode.ROLE_MISSING.getMessage()
             );
         }
 
@@ -76,7 +77,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
             return errorHandler.handle(
                     exchange,
                     HttpStatus.FORBIDDEN,
-                    "You do not have permission to access this resource"
+                    ErrorCode.FORBIDDEN.getMessage()
             );
         }
 
@@ -101,7 +102,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -1;
+        return -2;
     }
 
 }

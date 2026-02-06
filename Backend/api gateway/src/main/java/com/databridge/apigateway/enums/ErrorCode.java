@@ -4,7 +4,8 @@ public enum ErrorCode {
 
     INVALID_TOKEN("Invalid JWT Token"),
     MISSING_AUTH_HEADER("Missing or invalid Authorization header"),
-    FORBIDDEN("You do not have permission to access this resource");
+    FORBIDDEN("You do not have permission to access this resource"),
+    ROLE_MISSING("Role missing in token");
 
     private final String message;
 

@@ -5,24 +5,32 @@ spring:
   application:
     name: api-gateway
 
+  redis:
+    host: localhost
+    port: 6379
+    database: 1
+
   cloud:
     gateway:
+      default-filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+            key-resolver: "#{@userKeyResolver}"
+
       routes:
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
 
-        - id: som-service
-          uri: lb://SOM
-          predicates:
-            - Path=/som/**
-
-
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+#jwt:
+#  secret: ZGF0YWJyaWRnZS1zdXBlci1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4=
 jwt:
-  secret: ZGF0YWJyaWRnZS1zdXBlci1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4=
+  secret: ${JWT_SECRET}
