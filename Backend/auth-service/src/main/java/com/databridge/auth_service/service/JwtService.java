@@ -14,15 +14,16 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    private String secret;
+    private final Key signingKey;
+    private final long accessExpiration;
 
-    @Value("${jwt.access-token-expiration}")
-    private long accessExpiration;
-
-    private Key getSigningKey() {
+    public JwtService(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.access-token-expiration}") long accessExpiration
+    ){
         byte[] keyBytes = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBytes);
+        this.signingKey = Keys.hmacShaKeyFor(keyBytes);
+        this.accessExpiration = accessExpiration;
     }
 
     public String generateAccessToken(User user) {
@@ -32,8 +33,9 @@ public class JwtService {
                 .claim("role", user.getRole().name())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + accessExpiration))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .signWith(signingKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 }
+
 
