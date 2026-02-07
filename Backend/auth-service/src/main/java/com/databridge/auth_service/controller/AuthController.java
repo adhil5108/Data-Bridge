@@ -35,4 +35,6 @@ public class AuthController {
     public AuthResponse verify(@RequestBody VerifyOtpRequest request){
         return authService.verifyOtp(request);
     }
+
+
 }
