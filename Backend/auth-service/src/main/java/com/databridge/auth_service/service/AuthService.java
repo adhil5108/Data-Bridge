@@ -10,6 +10,5 @@ public interface AuthService {
 
     AuthResponse refresh(RefreshRequest request);
 
-
     AuthResponse verifyOtp(VerifyOtpRequest request);
 }

@@ -1,7 +1,7 @@
 package com.databridge.auth_service.service;
 
 import com.databridge.auth_service.enums.ErrorCode;
-import com.databridge.auth_service.exception.AppException;
+import com.databridge.auth_service.exception.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -29,7 +29,7 @@ public class OtpService {
         }
 
         if(requests != null && requests > 3){
-            throw new AppException(ErrorCode.TOO_MANY_OTP_REQUESTS);
+            throw new AuthException(ErrorCode.TOO_MANY_OTP_REQUESTS);
         }
 
         String otp = String.valueOf(
@@ -55,7 +55,7 @@ public class OtpService {
         Object storedHash = redisTemplate.opsForValue().get(key);
 
         if(storedHash == null){
-            throw new AppException(ErrorCode.INVALID_OTP);
+            throw new AuthException(ErrorCode.INVALID_OTP);
         }
 
         boolean matches = BCrypt.checkpw(otp, storedHash.toString());

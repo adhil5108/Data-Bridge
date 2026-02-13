@@ -24,7 +24,9 @@ public enum ErrorCode {
 
     TOO_MANY_OTP_REQUESTS("Too many OTP requests. Try again later.", HttpStatus.TOO_MANY_REQUESTS),
 
-    OAUTH_EMAIL_NOT_FOUND("Email not provided by OAuth provider", HttpStatus.BAD_REQUEST);
+    OAUTH_EMAIL_NOT_FOUND("Email not provided by OAuth provider", HttpStatus.BAD_REQUEST),
+
+    VALIDATION_FAILED("Validation failed", HttpStatus.BAD_REQUEST);
 
     private final String message;
     private final HttpStatus status;

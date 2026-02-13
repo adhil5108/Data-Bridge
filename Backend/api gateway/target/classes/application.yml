@@ -25,12 +25,15 @@ spring:
           predicates:
             - Path=/auth/**
 
+        - id: oauth2
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/oauth2/**, /login/**
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-#jwt:
-#  secret: ZGF0YWJyaWRnZS1zdXBlci1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4=
 jwt:
   secret: ${JWT_SECRET}

@@ -5,11 +5,11 @@ import com.databridge.auth_service.enums.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class AppException extends RuntimeException {
+public class AuthException extends RuntimeException {
 
     private final ErrorCode errorCode;
 
-    public AppException(ErrorCode errorCode){
+    public AuthException(ErrorCode errorCode){
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }

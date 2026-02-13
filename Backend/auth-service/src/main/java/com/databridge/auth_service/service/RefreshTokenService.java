@@ -2,7 +2,7 @@ package com.databridge.auth_service.service;
 
 import com.databridge.auth_service.entity.RefreshToken;
 import com.databridge.auth_service.enums.ErrorCode;
-import com.databridge.auth_service.exception.AppException;
+import com.databridge.auth_service.exception.AuthException;
 import com.databridge.auth_service.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,14 +38,14 @@ public class RefreshTokenService {
         RefreshToken refreshToken = refreshTokenRepository
                 .findByToken(token)
                 .orElseThrow(() ->
-                        new AppException(ErrorCode.INVALID_TOKEN));
+                        new AuthException(ErrorCode.INVALID_TOKEN));
 
         if(refreshToken.isRevoked()){
-            throw new AppException(ErrorCode.INVALID_TOKEN);
+            throw new AuthException(ErrorCode.INVALID_TOKEN);
         }
 
         if(refreshToken.getExpiryDate().isBefore(Instant.now())){
-            throw new AppException(ErrorCode.TOKEN_EXPIRED);
+            throw new AuthException(ErrorCode.TOKEN_EXPIRED);
         }
 
         return refreshToken;

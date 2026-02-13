@@ -6,7 +6,7 @@ import com.databridge.auth_service.entity.User;
 import com.databridge.auth_service.enums.AuthProvider;
 import com.databridge.auth_service.enums.ErrorCode;
 import com.databridge.auth_service.enums.Role;
-import com.databridge.auth_service.exception.AppException;
+import com.databridge.auth_service.exception.AuthException;
 import com.databridge.auth_service.repository.UserRepository;
 import com.databridge.auth_service.service.*;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +31,11 @@ public class AuthServiceImpl implements AuthService {
     private final EmailService emailService;
     private final RedisTemplate<String, Object> redisTemplate;
 
-
-
     @Override
     public RegisterResponse register(RegisterRequest request){
 
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new AppException(ErrorCode.USER_ALREADY_EXISTS);
+            throw new AuthException(ErrorCode.USER_ALREADY_EXISTS);
         }
 
         String key = "register:" + request.getEmail();
@@ -71,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() ->
-                        new AppException(ErrorCode.USER_NOT_FOUND));
+                        new AuthException(ErrorCode.USER_NOT_FOUND));
 
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = refreshTokenService.createRefreshToken(user.getId());
@@ -95,7 +93,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findById(
                 refreshToken.getUserId()
         ).orElseThrow(() ->
-                new AppException(ErrorCode.USER_NOT_FOUND));
+                new AuthException(ErrorCode.USER_NOT_FOUND));
 
         String accessToken = jwtService.generateAccessToken(user);
 
@@ -115,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
                 otpService.verifyOtp(request.getEmail(), request.getOtp());
 
         if(!valid){
-            throw new AppException(ErrorCode.INVALID_OTP);
+            throw new AuthException(ErrorCode.INVALID_OTP);
         }
 
         String key = "register:" + request.getEmail();
@@ -124,12 +122,12 @@ public class AuthServiceImpl implements AuthService {
                 (RegisterRequest) redisTemplate.opsForValue().get(key);
 
         if(registerRequest == null){
-            throw new AppException(ErrorCode.REGISTRATION_EXPIRED);
+            throw new AuthException(ErrorCode.REGISTRATION_EXPIRED);
         }
 
 
         if(userRepository.existsByEmail(registerRequest.getEmail())){
-            throw new AppException(ErrorCode.USER_ALREADY_EXISTS);
+            throw new AuthException(ErrorCode.USER_ALREADY_EXISTS);
         }
 
         User user = new User();

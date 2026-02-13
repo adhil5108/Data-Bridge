@@ -4,7 +4,7 @@ import com.databridge.auth_service.entity.User;
 import com.databridge.auth_service.enums.AuthProvider;
 import com.databridge.auth_service.enums.ErrorCode;
 import com.databridge.auth_service.enums.Role;
-import com.databridge.auth_service.exception.AppException;
+import com.databridge.auth_service.exception.AuthException;
 import com.databridge.auth_service.repository.UserRepository;
 import com.databridge.auth_service.service.JwtService;
 import com.databridge.auth_service.service.RefreshTokenService;
@@ -43,7 +43,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String emailAttr = oAuth2User.getAttribute("email");
 
         if(emailAttr == null){
-            throw new AppException(ErrorCode.OAUTH_EMAIL_NOT_FOUND);
+            throw new AuthException(ErrorCode.OAUTH_EMAIL_NOT_FOUND);
         }
 
         final String email = emailAttr.toLowerCase();
