@@ -96,7 +96,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
     private boolean isPublicEndpoint(String path){
         return path.startsWith("/auth/")
                 || path.startsWith("/actuator")
-                || path.contains("eureka")|| path.contains("oauth2");
+                || path.contains("oauth2");
     }
 
 

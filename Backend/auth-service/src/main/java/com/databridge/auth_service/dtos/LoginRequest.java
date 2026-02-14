@@ -10,6 +10,6 @@ public class LoginRequest {
     @Email
     private String email;
 
-    @Size(min = 6)
+    @Size(min = 8)
     private String password;
 }

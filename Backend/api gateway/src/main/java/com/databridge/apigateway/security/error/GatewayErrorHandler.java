@@ -29,7 +29,6 @@ public class GatewayErrorHandler {
                         message);
 
         try {
-
             byte[] bytes =
                     objectMapper.writeValueAsBytes(response);
 

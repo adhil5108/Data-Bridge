@@ -26,7 +26,8 @@ public enum ErrorCode {
 
     OAUTH_EMAIL_NOT_FOUND("Email not provided by OAuth provider", HttpStatus.BAD_REQUEST),
 
-    VALIDATION_FAILED("Validation failed", HttpStatus.BAD_REQUEST);
+    VALIDATION_FAILED("Validation failed", HttpStatus.BAD_REQUEST),
+    INTERNAL_SERVER_ERROR("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String message;
     private final HttpStatus status;

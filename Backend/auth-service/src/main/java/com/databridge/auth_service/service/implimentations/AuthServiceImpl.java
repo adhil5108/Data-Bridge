@@ -130,6 +130,8 @@ public class AuthServiceImpl implements AuthService {
             throw new AuthException(ErrorCode.USER_ALREADY_EXISTS);
         }
 
+
+        // use builder
         User user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));

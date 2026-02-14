@@ -16,8 +16,7 @@ public class GlobalExceptionHandler {
 
     //custom exceptions
     @ExceptionHandler(AuthException.class)
-    public ErrorResponse handleAppException(AuthException ex,
-                                            HttpServletResponse response){
+    public ErrorResponse handleAppException(AuthException ex, HttpServletResponse response){
         ErrorCode error = ex.getErrorCode();
         response.setStatus(error.getStatus().value());
 
@@ -37,14 +36,14 @@ public class GlobalExceptionHandler {
 
         return ErrorResponse.builder()
                 .timestamp(Instant.now())
-                .error("INVALID_CREDENTIALS")
-                .message("Invalid email or password")
+                .error(ErrorCode.INVALID_CREDENTIALS.name())
+                .message(ErrorCode.INVALID_CREDENTIALS.getMessage())
                 .build();
     }
 
 
 
-    // validations
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse handleValidationException(
             MethodArgumentNotValidException ex,
@@ -65,6 +64,7 @@ public class GlobalExceptionHandler {
                 .message(message)
                 .build();
     }
+
     // unknown errors
     @ExceptionHandler(Exception.class)
     public ErrorResponse handleGenericException(HttpServletResponse response){
@@ -73,8 +73,8 @@ public class GlobalExceptionHandler {
 
         return ErrorResponse.builder()
                 .timestamp(Instant.now())
-                .error("INTERNAL_SERVER_ERROR")
-                .message("Something went wrong")
+                .error(ErrorCode.INTERNAL_SERVER_ERROR.name())
+                .message(ErrorCode.INTERNAL_SERVER_ERROR.getMessage())
                 .build();
     }
 
