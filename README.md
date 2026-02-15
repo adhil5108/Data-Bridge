@@ -1,28 +1,62 @@
-# Data-Bridge
+#  Data-Bridge
 
-**Data-Bridge** is a migration engine designed to simplify the process of moving data from NoSQL databases to SQL-based systems. It focuses on providing a clean, structured architecture for handling data transformation, schema mapping, and migration workflows.
+**Data-Bridge** is an event-driven migration engine designed to simplify moving data from **NoSQL databases (MongoDB)** to **SQL systems (PostgreSQL)**.
 
-The goal of this project is to reduce the complexity involved in transitioning between database paradigms while keeping the system modular, scalable, and easy to maintain.
+The platform focuses on safe, scalable data migration through modular services, asynchronous processing, and structured schema transformation.
+
+Its goal is to reduce the complexity of database paradigm transitions while maintaining reliability, scalability, and clean system design.
+
+---
 
 ##  What It Does
 
-* Migrates data from NoSQL sources to SQL databases
-* Handles data transformation and structure mapping
-* Provides an extensible architecture for evolving migration needs
-* Encourages consistency and maintainability across services
+- Migrates large datasets from NoSQL to SQL databases
+- Performs schema discovery and data transformation
+- Processes migration tasks asynchronously
+- Supports scalable worker-based execution
+- Ensures reliable and maintainable migration workflows
 
-##  Architecture Philosophy
+---
 
-Data-Bridge is built around a modular design so that each stage of the migration process can operate independently. This makes the system easier to extend, test, and adapt for different migration scenarios.
+##  Architecture Overview
 
-Rather than being tightly coupled to a single database or workflow, the engine is intended to be flexible enough to support future enhancements as requirements grow.
+Data-Bridge follows a modular, event-driven architecture:
+
+- **API Gateway** — Handles requests and authentication
+- **Orchestrator Service** — Coordinates migration workflows
+- **Worker Services** — Process migration jobs asynchronously
+- **Message Broker (Kafka)** — Enables fault-tolerant communication
+- **Target Database (PostgreSQL)** — Stores migrated structured data
+
+Each component operates independently, allowing horizontal scalability and easier system evolution.
+
+---
+
+##  Tech Stack
+
+- Java
+- Spring Boot
+- Apache Kafka
+- MongoDB
+- PostgreSQL
+- Redis
+- Docker
+
+---
 
 ##  Project Status
 
-Currently under active development. Features and architecture may evolve as the project expands.
+Actively under development.  
+Architecture and features continue to evolve as the system grows.
+
+---
 
 ##  Vision
 
-Modern systems often outgrow their original database choices. Data-Bridge aims to act as a reliable connector between NoSQL flexibility and SQL structure, making migrations smoother and more predictable.
+Modern applications often outgrow their original database choices.  
+Data-Bridge aims to provide a reliable bridge between NoSQL flexibility and SQL consistency, enabling safer and more predictable migrations.
 
+---
 
+##  Author
+Hadil 
